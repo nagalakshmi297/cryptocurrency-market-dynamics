@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block user_login %}active{% endblock %}
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+<style>
+    .auth-wrapper {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+    
+    .auth-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .auth-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary-cyan), var(--primary-blue));
+    }
+    
+    .auth-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .auth-header i {
+        font-size: 3rem;
+        color: var(--primary-cyan);
+        margin-bottom: 15px;
+        text-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+    }
+    
+    .auth-title {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        color: var(--text-main);
+        margin: 0;
+    }
+    
+    .auth-form .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .auth-form label {
+        display: block;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    
+    .auth-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.6);
+        color: var(--text-main);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .auth-input:focus {
+        outline: none;
+        border-color: var(--primary-cyan);
+        box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        background: rgba(15, 23, 42, 0.8);
+    }
+    
+    .auth-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(45deg, var(--primary-blue), var(--primary-cyan));
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+    
+    .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+    }
+    
+    .auth-links {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 0.95rem;
+    }
+    
+    .auth-links a {
+        color: var(--primary-cyan);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+    
+    .auth-links a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+    
+    .alert-glass {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="auth-wrapper">
+    <div class="auth-card animate__animated animate__zoomIn">
+        <div class="auth-header">
+            <i class="fas fa-user-circle"></i>
+            <h2 class="auth-title">User Gateway</h2>
+            <p class="text-muted mt-2">Sign in to access your dashboard</p>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-glass">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" action="{% url 'UserLoginCheck' %}" class="auth-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="loginid">Login ID</label>
+                <input type="text" name="loginname" id="loginid" class="auth-input" required placeholder="Enter your Login ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="pswd" id="password" class="auth-input" required placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="auth-btn">
+                Authenticate <i class="fas fa-sign-in-alt ms-2"></i>
+            </button>
+        </form>
+        
+        <div class="auth-links">
+            <span class="text-muted">Don't have an account?</span> 
+            <a href="{% url 'UserRegisterActions' %}">Register Now</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block home_page %}active{% endblock %}
+{% block title %}Home - Crypto Prediction{% endblock %}
+
+{% block content %}
+<style>
+    /* Add extra modern layout classes for index.html here */
+    .info-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: -30px; 
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        position: relative;
+        z-index: 10;
+    }
+    
+    .info-card h2 {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: linear-gradient(to right, #f8fafc, #94a3b8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="info-card animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h2>Why Predict Cryptocurrency Prices?</h2>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        Cryptocurrencies are incredibly volatile compared to traditional currencies. Their sudden spikes and drops provide both extreme risks and substantial rewards.
+                    </p>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        By leveraging multi-layer machine learning models, our platform processes significant market signals, volumes, and historical fluctuations to output robust predictions, giving you that crucial edge.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <!-- A decorative glowing crypto element -->
+                    <div style="font-size: 8rem; color: var(--primary-cyan); text-shadow: 0 0 40px rgba(6, 182, 212, 0.4); animation: pulse 3s infinite;">
+                        <i class="fa-brands fa-ethereum"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

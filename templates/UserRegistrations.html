@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block title %}User Registration{% endblock %}
+
+{% block content %}
+<style>
+    .reg-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        min-height: 70vh;
+    }
+    
+    .reg-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        max-width: 650px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .reg-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary-cyan), var(--accent-purple));
+    }
+    
+    .reg-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .reg-header i {
+        font-size: 3rem;
+        color: var(--accent-purple);
+        margin-bottom: 15px;
+        text-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+    
+    .reg-title {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        color: var(--text-main);
+        margin: 0;
+    }
+    
+    .auth-form .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .auth-form label {
+        display: block;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    
+    .auth-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.6);
+        color: var(--text-main);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .auth-input:focus {
+        outline: none;
+        border-color: var(--accent-purple);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        background: rgba(15, 23, 42, 0.8);
+    }
+    
+    .auth-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(45deg, var(--primary-cyan), var(--accent-purple));
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 15px;
+    }
+    
+    .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    }
+    
+    .auth-links {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 0.95rem;
+    }
+    
+    .auth-links a {
+        color: var(--primary-cyan);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+    
+    .auth-links a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+    
+    .alert-glass {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        color: #6ee7b7;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+    .alert-error {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+    }
+</style>
+
+<div class="reg-wrapper">
+    <div class="reg-card animate__animated animate__fadeInUp">
+        <div class="reg-header">
+            <i class="fas fa-user-plus"></i>
+            <h2 class="reg-title">Create Account</h2>
+            <p class="text-muted mt-2">Join CryptoPredictor today</p>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-glass {% if 'error' in message.tags %}alert-error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" name="name" id="name" class="auth-input" required placeholder="John Doe">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="loginid">Login ID</label>
+                        <input type="text" name="loginid" id="loginid" class="auth-input" required placeholder="Choose a unique ID">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="auth-input" required placeholder="Create a strong password">
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="text" name="mobile" id="mobile" class="auth-input" required placeholder="+1 234 567 8900">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" name="email" id="email" class="auth-input" required placeholder="john@example.com">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="locality">Locality / City</label>
+                <input type="text" name="locality" id="locality" class="auth-input" required placeholder="Your city or region">
+            </div>
+            
+            <button type="submit" class="auth-btn">
+                Register Account <i class="fas fa-rocket ms-2"></i>
+            </button>
+        </form>
+        
+        <div class="auth-links">
+            <span class="text-muted">Already have an account?</span> 
+            <a href="{% url 'UserLogin' %}">Sign in here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
