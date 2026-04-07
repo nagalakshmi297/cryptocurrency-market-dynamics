@@ -12,11 +12,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
-
-from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import LSTM, Dense, Dropout
 
 from .forms import UserRegistrationForm
 from .models import UserRegistrationModel
@@ -158,31 +156,25 @@ def train_crypto_models(request):
         mape = mean_absolute_percentage_error(y_test, svm_pred)
         metrics.append(["SVM", mse, rmse, mae, mape])
 
-        # LSTM
-        X_train_lstm = X_train_scaled.reshape(
-            (X_train_scaled.shape[0], 1, X_train_scaled.shape[1])
+        # MLP Neural Network (replaces LSTM — no TensorFlow needed)
+        mlp = MLPRegressor(
+            hidden_layer_sizes=(100, 50),
+            activation='relu',
+            solver='adam',
+            max_iter=300,
+            random_state=42
         )
-        X_test_lstm = X_test_scaled.reshape(
-            (X_test_scaled.shape[0], 1, X_test_scaled.shape[1])
-        )
-
-        lstm = Sequential()
-        lstm.add(LSTM(50, activation='relu', input_shape=(1, X_train_scaled.shape[1])))
-        lstm.add(Dropout(0.2))
-        lstm.add(Dense(1))
-        lstm.compile(optimizer='adam', loss='mse')
-        lstm.fit(X_train_lstm, y_train_scaled, epochs=20, batch_size=32, verbose=0)
-
-        lstm_pred = scaler_y.inverse_transform(
-            lstm.predict(X_test_lstm)
+        mlp.fit(X_train_scaled, y_train_scaled)
+        mlp_pred = scaler_y.inverse_transform(
+            mlp.predict(X_test_scaled).reshape(-1, 1)
         ).ravel()
-        lstm.save("models/lstm_model.h5")
+        joblib.dump(mlp, "models/mlp_model.pkl")
 
-        mse  = mean_squared_error(y_test, lstm_pred)
+        mse  = mean_squared_error(y_test, mlp_pred)
         rmse = np.sqrt(mse)
-        mae  = mean_absolute_error(y_test, lstm_pred)
-        mape = mean_absolute_percentage_error(y_test, lstm_pred)
-        metrics.append(["LSTM", mse, rmse, mae, mape])
+        mae  = mean_absolute_error(y_test, mlp_pred)
+        mape = mean_absolute_percentage_error(y_test, mlp_pred)
+        metrics.append(["Neural Network (MLP)", mse, rmse, mae, mape])
 
         metrics_df = pd.DataFrame(
             metrics, columns=["Model", "MSE", "RMSE", "MAE", "MAPE"]

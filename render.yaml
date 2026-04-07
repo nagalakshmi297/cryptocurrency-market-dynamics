@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cryptocurrency-prediction
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn cryptocurrency_price_prediction.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
