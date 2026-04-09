@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Databases
+db.sqlite3
+db.sqlite3-journal
+
+# Local environment files
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django static/media
+staticfiles/
+media/
+!media/crypto_market_data.csv
+
+# Render files
+.render/
