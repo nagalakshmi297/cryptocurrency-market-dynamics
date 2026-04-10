@@ -10,4 +10,4 @@ scikit-learn
 yfinance
 requests
 beautifulsoup4
-tensorflow==2.15.0
+tensorflow
