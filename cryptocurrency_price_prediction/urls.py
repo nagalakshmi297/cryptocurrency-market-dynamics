@@ -37,6 +37,7 @@ urlpatterns = [
     path("UserHome/", user_views.UserHome, name="UserHome"),
     path('train/', user_views.train_crypto_models, name='train_crypto_models'),
     path('predict/', user_views.predict_market_cap, name='predict_market_cap'),
+    path('api/live-prediction/', user_views.live_prediction_api, name='live_prediction_api'),
 
     ### Admin Side Views
     path("AdminLoginCheck/", admins.AdminLoginCheck, name="AdminLoginCheck"),

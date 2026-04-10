@@ -108,6 +108,15 @@ Train Models
     <div class="train-btn-area">
         <form method="post">
             {% csrf_token %}
+            <div style="margin-bottom: 25px;">
+                <label style="color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem;">
+                    <input type="checkbox" name="refresh_data" style="width: 20px; height: 20px; accent-color: var(--primary-cyan);">
+                    <span style="opacity: 0.9;">Refresh 1-Year Data from YFinance</span>
+                </label>
+                <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px;">
+                    <i class="fas fa-info-circle me-1"></i> This replaces the local CSV with fresh live data.
+                </p>
+            </div>
             <button type="submit" class="train-button">
                 <i class="fas fa-play me-2"></i> Ignite Training Process
             </button>
