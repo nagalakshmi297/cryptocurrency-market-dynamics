@@ -10,4 +10,4 @@ scikit-learn
 yfinance
 requests
 beautifulsoup4
-tensorflow
+tensorflow-cpu

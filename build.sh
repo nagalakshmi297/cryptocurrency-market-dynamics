@@ -2,8 +2,11 @@
 # Exit on error
 set -o errexit
 
-pip install --upgrade pip
-pip install -r requirements.txt
+# Upgrade pip and critical build tools
+python -m pip install --upgrade pip setuptools wheel
+
+# Install dependencies with no-cache to save space
+pip install -r requirements.txt --no-cache-dir
 
 python manage.py collectstatic --no-input
 python manage.py migrate
