@@ -1,0 +1,13 @@
+Django>=5.0
+gunicorn
+whitenoise[brotli]
+dj-database-url
+psycopg2-binary
+pandas
+numpy
+joblib
+scikit-learn
+yfinance
+requests
+beautifulsoup4
+tensorflow
